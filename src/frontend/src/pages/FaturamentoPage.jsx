@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { apiGet, apiPost } from '../api'
@@ -10,26 +9,29 @@ export default function FaturamentoPage(){
   return (
     <div>
       <h2>Faturamento</h2>
-      <div style={{display:'flex', gap:8, alignItems:'center'}}>
-        <input value={comp} onChange={e=>setComp(e.target.value)} placeholder="yyyy-MM" />
-        <button onClick={async ()=>{
-          await apiPost('/api/faturas/gerar', { competencia: comp })
-          faturas.refetch()
-        }}>Gerar faturas</button>
+
+      <div className="section">
+        <div style={{display:'flex', gap:10, alignItems:'center'}}>
+          <input value={comp} onChange={e=>setComp(e.target.value)} placeholder="yyyy-MM" />
+          <button onClick={async ()=>{
+            await apiPost('/api/faturas/gerar', { competencia: comp })
+            faturas.refetch()
+          }}>Gerar faturas</button>
+        </div>
       </div>
 
       <h3 style={{marginTop:16}}>Faturas</h3>
-      {faturas.isLoading? <p>Carregando...</p> : (
-        <table border="1" cellPadding="6">
-          <thead><tr><th>Cliente</th><th>Competência</th><th>Valor</th><th>Qtd Veículos</th><th>Placas</th></tr></thead>
-          <tbody>
-            {faturas.data?.map(f=>(
-              <FaturaRow key={f.id} f={f} />
-            ))}
-          </tbody>
-        </table>
-      )}
-      <p style={{marginTop:8, color:'#666'}}>BUG: a API associa veículos pelo dono atual, não pelo dono na data de corte. Corrigir no backend.</p>
+      <div className="section">
+        {faturas.isLoading? <p>Carregando...</p> : (
+          <table>
+            <thead><tr><th>Cliente</th><th>Competência</th><th>Valor</th><th>Qtd Veículos</th><th>Placas</th></tr></thead>
+            <tbody>
+              {faturas.data?.map(f=>(<FaturaRow key={f.id} f={f} />))}
+            </tbody>
+          </table>
+        )}
+        <p className="note">BUG proposital: API associa veículos pelo dono atual, e não pelo dono na data de corte.</p>
+      </div>
     </div>
   )
 }
@@ -41,17 +43,17 @@ function FaturaRow({f}){
     <tr>
       <td>{f.clienteId}</td>
       <td>{f.competencia}</td>
-      <td>{f.valor?.toFixed?.(2)}</td>
+      <td>{Number(f.valor).toFixed(2)}</td>
       <td>{f.qtdVeiculos}</td>
       <td>
-        <button onClick={async ()=>{
+        <button className="btn-ghost" onClick={async ()=>{
           if(!show){
             const r = await apiGet(`/api/faturas/${f.id}/placas`)
             setPlacas(r)
           }
           setShow(s=>!s)
         }}>{show?'ocultar':'detalhar'}</button>
-        {show && <div>{placas.join(', ')}</div>}
+        {show && <div style={{marginTop:6}}>{placas.join(', ')}</div>}
       </td>
     </tr>
   )

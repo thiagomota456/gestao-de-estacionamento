@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
@@ -7,14 +6,15 @@ import ClientesPage from './pages/ClientesPage'
 import VeiculosPage from './pages/VeiculosPage'
 import FaturamentoPage from './pages/FaturamentoPage'
 import CsvUploadPage from './pages/CsvUploadPage'
+import './styles.css'
 
 const qc = new QueryClient()
 
 function Layout(){
   return (
-    <div style={{padding:16, fontFamily:'system-ui'}}>
+    <div className="app">
       <h1>Parking</h1>
-      <nav style={{display:'flex', gap:12}}>
+      <nav>
         <Link to="/">Clientes</Link>
         <Link to="/veiculos">Veículos</Link>
         <Link to="/faturamento">Faturamento</Link>

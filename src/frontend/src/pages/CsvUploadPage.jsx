@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react'
 
 export default function CsvUploadPage(){
@@ -20,12 +19,20 @@ export default function CsvUploadPage(){
   return (
     <div>
       <h2>Importar CSV</h2>
-      <form onSubmit={handleUpload}>
-        <input type="file" name="file" accept=".csv" />
-        <button type="submit">Enviar</button>
-      </form>
-      <pre style={{background:'#111', color:'#0f0', padding:8, marginTop:12}}>{log? JSON.stringify(log, null, 2) : 'Aguardando upload...'}</pre>
-      <p style={{marginTop:8, color:'#666'}}>Tarefa: melhorar relatório de erros (linhas e motivos mais claros; opcional transação por lote).</p>
+      <div className="section">
+        <form onSubmit={handleUpload} style={{display:'flex', gap:10, alignItems:'center'}}>
+          <input type="file" name="file" accept=".csv" />
+          <button type="submit">Enviar</button>
+        </form>
+      </div>
+
+      <h3 style={{marginTop:16}}>Relatório</h3>
+      <div className="section">
+        <pre style={{background:'#0b0c0e', color:'#c7d2fe', padding:12, margin:0, borderRadius:10}}>
+{log? JSON.stringify(log, null, 2) : 'Aguardando upload...'}
+        </pre>
+        <p className="note">Tarefa: melhorar o relatório de erros (linhas e motivos mais claros; opcional transação por lote).</p>
+      </div>
     </div>
   )
 }
