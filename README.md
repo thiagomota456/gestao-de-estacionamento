@@ -1,81 +1,80 @@
 
 # Teste Técnico ADN2001 – Desenvolvedor(a) (Gestão de Estacionamento)
 
-## ⏱️ Tempo Máximo
+## 1. Tempo Máximo
 Este desafio foi desenhado para ser realizado em **até 4 horas**.
 
+---
 
-## 🎯 Objetivo
+## 2. Objetivo
+Este teste consiste em uma aplicação full-stack, com **Frontend em React** e **Backend em .NET C# Web API**, composta pelas seguintes telas:
 
-Este teste é uma aplicação full-stack completa com Frontend em React e backend em .NET C# Web.Api com as seguintes telas
+- **Cliente**
+  Atualmente permite apenas listagem, cadastro e exclusão.  
 
-Composto pelas Telas:
+- **Veículo**
+  Atualmente permite apenas a edição simplificada do modelo.  
 
-  - Cliente
-    Permitido apenas listagem, cadastro e exclusão. 
-  - Veículo 
-    Permite apenas a edição do Modelo
-  - Faturamento
-    Gera as faturas para os mensalistas.
+- **Faturamento**
+  Responsável pela geração de faturas para clientes mensalistas.  
 
-## Proposta do Teste
+---
 
-  É desejado que você configure a máquina em seu ambiente, compreenda como o código funcione e consiga realizar a correção das tarefas 
-abaixo. As regras de execução da os estão na seção *Escopo & Regras* mais abaixo neste documento.
-  
-  ### Tarefa 1 - Completar a Tela de Cliente
-  
-  Desejamos ter a opção de Editar os clientes Permitindo Trocar Nome, Telefone, Endereço, VAlor da mensalidade e se o cliente é mensalista
-ou não. Devemos garantir unicidade na base para os campos (Nome + Telefone). 
-  Exibir mensagens de erro corretamente que orientem o usuário do erro que o mesmo cometeu.
-  Se atente a seção 'Escopo & Regras'
+## 3. Proposta do Teste
+O(a) candidato(a) deverá configurar o ambiente, compreender o funcionamento do código existente e realizar as correções e melhorias listadas abaixo. As regras gerais estão detalhadas na seção *Escopo & Regras*.  
 
-  ### Tarefa 2 - Completar a Tela de Veículos
+### Tarefa 1 – Completar a Tela de Cliente
+- Implementar a edição de clientes, permitindo alterar **Nome**, **Telefone**, **Endereço**, **Valor da mensalidade** e se o cliente é mensalista.  
+- Garantir unicidade na base para os campos (**Nome + Telefone**).  
+- Exibir mensagens de erro claras e úteis para orientar o usuário.  
 
-  A edição de veículos foi feita de forma bem simplificada, desejamos permitir editar o Modelo e Ano do veículo, e permitir a troca do cliente
-inclusive no meio de um período de faturamento. Neste caso a fatura deverá ser parcial pela data de corte tanto para o primeiro cliente quanto para o segundo cliente 
-proporcional ao número de dias.
+### Tarefa 2 – Completar a Tela de Veículos
+- Permitir edição do **Modelo**, **Ano** e também a **troca de cliente** associado ao veículo.  
+- A troca de cliente pode ocorrer no meio de um período de faturamento. Neste caso, a fatura deverá ser proporcional, considerando os dias em que o veículo esteve associado a cada cliente.  
 
-  ### Tarefa 3 - Upload CSV
-  Temos uma demanda de melhoria nas mensagens de erro de forma que seja possível compreender melhor os erros que ocorreram durante o processo de importação. A proposta é que haja o detalhamento dos erros por linha.
+### Tarefa 3 – Melhorar Upload CSV
+- Detalhar melhor as mensagens de erro no processo de importação.  
+- O relatório deve identificar claramente a **linha** e o **motivo do erro**.  
 
+---
 
---
-## Informações para configuração do Projeto
+## 4. Informações para Configuração do Projeto
 
-### 🛠️ Stack de Referência
-- Backend: .NET 8 Web API + EF Core + PostgreSQL
-- Frontend: React (Vite) + React Router + React Query
-- **Sem containers**: conexão local no `appsettings.json`
+### 4.1 Stack de Referência
+- **Backend**: .NET 8 Web API + EF Core + PostgreSQL  
+- **Frontend**: React (Vite) + React Router + React Query  
+- **Sem containers**: a conexão é configurada diretamente em `appsettings.json`.  
 
-> Você pode trocar React por Angular/Vue, e/ou o ORM, mas mantenha o escopo e explique no README as escolhas. O boilerplate criado está em React com javascript.
+> É permitido substituir React por Angular/Vue e/ou trocar o ORM, desde que o escopo seja mantido e as decisões sejam explicadas no README. O boilerplate fornecido está em React com JavaScript.  
 
-### 🚀 Como Rodar (local)
-#### 1) Banco PostgreSQL
-- Crie um banco local (ex.: `parking_test`) e ajuste `appsettings.json` se necessário.
-- Rode o seed via prompt (bash/WSL):
-  ```bash
-  psql -h localhost -U postgres -d parking_test -f scripts/seed.sql
-  ```
-- Caso esteja no Windows e não possua WSL pode abrir um gerenciador de banco de dados (DBeaver por ex.) e execute o arquivo de seed.
+### 4.2 Execução Local
 
-#### 2) Backend
+#### Banco PostgreSQL
+1. Crie um banco local (ex.: `parking_test`) e ajuste a `ConnectionString` em `appsettings.json`, se necessário.  
+2. Rode o seed pelo terminal (bash/WSL):  
+   ```bash
+   psql -h localhost -U postgres -d parking_test -f scripts/seed.sql
+   ```  
+   Caso utilize Windows sem WSL, execute o script pelo gerenciador de banco de dados de sua preferência (ex.: DBeaver).  
+
+#### Backend
 ```bash
 cd src/backend
 dotnet restore
 dotnet run
 ```
-A API sobe (por padrão) em `http://localhost:5000` (ou conforme configurado). Swagger ativado.
+A API será iniciada (por padrão) em `http://localhost:5000`. Swagger ativado em `/swagger`.  
 
-#### 3) Frontend
+#### Frontend
 ```bash
 cd src/frontend
 npm install
 npm run dev
 ```
-Acesse `http://localhost:5173`. Configure `VITE_API_URL` se precisar apontar para outra porta.
+A aplicação ficará disponível em `http://localhost:5173`.  
+Configure `VITE_API_URL` caso seja necessário apontar para outra porta.  
 
-### 📂 Pastas
+### 4.3 Estrutura de Pastas
 ```
 /src/backend        -> API .NET 8
 /src/frontend       -> React (Vite)
@@ -83,45 +82,55 @@ Acesse `http://localhost:5173`. Configure `VITE_API_URL` se precisar apontar par
 /scripts/exemplo.csv-> CSV de exemplo
 ```
 
-## 📚 Escopo & Regras
+---
+
+## 5. Escopo & Regras
+
 ### Clientes
-- Filtro por mensalista (`true|false|all`), paginação simples.
-- Chave composta por **Nome + Telefone** (telefone normalizado apenas dígitos).
-  - **Validações**:
-  - Telefone sanitizado e somente númerico 
+- Deve haver filtro por mensalista (`true|false|all`) e paginação simples.  
+- Chave composta por **Nome + Telefone** (telefone normalizado apenas dígitos).  
+- Validações:
+  - Telefone sanitizado (apenas caracteres numéricos).  
 
 ### Veículos
-- Associados a um cliente (1:N).
-- **Validações**:
-  - Placa única (case-insensitive).
-  - Ano entre 1900 e o ano atual (quando informado).
-  - Placa sanitizada e validada no padrão Mercosul.
+- Associados a um cliente (1:N).  
+- Validações:
+  - Placa única (case-insensitive).  
+  - Ano entre 1900 e o ano atual (quando informado).  
+  - Placa sanitizada e validada no padrão Mercosul.  
 
 ### Faturamento
-- "competencia": "yyyy-MM". 
-- Gera faturas apenas para mensalistas com veículos.
-- Evitar duplicidade por (cliente, competência).
-- Associar veículos faturados em `fatura_veiculo`.
+- Entrada no formato `"competencia": "yyyy-MM"`.  
+- Geração de faturas apenas para mensalistas com veículos ativos.  
+- Evitar duplicidade por (cliente, competência).  
+- Associar veículos faturados em `fatura_veiculo`.  
+- Ajustar a lógica de faturamento para lidar corretamente com troca de cliente durante a competência.  
 
 ### Importação CSV
-- Endpoint: `POST /api/import/csv` (campo `file`).
-- Formato exemplo em `scripts/exemplo.csv`.
-- Retornar relatório `{ processados, inseridos, erros }`.
+- Endpoint: `POST /api/import/csv` (campo `file`).  
+- Formato de exemplo: `scripts/exemplo.csv`.  
+- Retorno esperado: `{ processados, inseridos, erros }`.  
+- Melhorar detalhamento de erros por linha.  
 
+---
 
-## 🧪 O que será avaliado
-- Modelagem e regras (placa única, troca de cliente refletida, faturamento por competência).
-- Qualidade do código e separação de camadas.
-- Uso consciente do PostgreSQL/ORM.
-- Robustez do CSV.
-- Front funcional (estado consistente pós PUT/DELETE).
-- Documentação (explicar decisões e limitações).
+## 6. Critérios de Avaliação
+- Modelagem e regras (unicidade, troca de cliente refletida, faturamento proporcional).  
+- Clareza e organização do código.  
+- Boas práticas no uso do PostgreSQL e do ORM.  
+- Robustez da rotina de importação CSV.  
+- Funcionalidade do frontend (estado consistente sem necessidade de recarregar a página).  
+- Documentação clara sobre decisões e limitações.  
 
-## 📝 Observações
-- O uso de IA é permitido, **desde que** você domine o que foi entregue.
-- O front pode ser simples; priorize funcionalidade e clareza.
-- Explique decisões importantes no README final.
+---
 
+## 7. Observações
+- O uso de ferramentas de apoio (incluindo IA) é permitido, desde que o(a) candidato(a) tenha pleno domínio do código entregue.  
+- O frontend pode ser simples, desde que funcione corretamente e seja claro.  
+- Explique no README final todas as decisões técnicas relevantes.  
 
-## Entrega
-Espera-se que no prazo acordado seja publicado uma URL pública do Git com o projeto modificado e que na reunião de alinhamento seja realizada a apresentação funcional do código entregue, explicando-se as decisões, limitações e o código das tarefas propostas.
+---
+
+## 8. Entrega
+- Espera-se que, no prazo acordado, o código seja publicado em um repositório Git público.  
+- Na reunião de alinhamento, o(a) candidato(a) deverá apresentar o funcionamento do código entregue e explicar as decisões técnicas adotadas, as limitações e a resolução das tarefas propostas.  
