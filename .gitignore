@@ -45,3 +45,4 @@ desktop.ini
 ### Ambiente ###
 .env
 .env.*.local
+src/backend/backend.sln
