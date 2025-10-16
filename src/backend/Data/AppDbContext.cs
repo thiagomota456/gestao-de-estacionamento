@@ -28,7 +28,7 @@ namespace Parking.Api.Data
                 e.Property(x => x.Mensalista).HasColumnName("mensalista");
                 e.Property(x => x.ValorMensalidade).HasColumnName("valor_mensalidade");
                 e.Property(x => x.DataInclusao).HasColumnName("data_inclusao");
-                e.HasIndex(x => new { x.Nome, x.Telefone }).IsUnique(true);
+                e.HasIndex(x => new { x.Nome, x.Telefone }).IsUnique();
                 e.HasMany(x => x.Veiculos).WithOne(x => x.Cliente!).HasForeignKey(x => x.ClienteId);
             });
 
