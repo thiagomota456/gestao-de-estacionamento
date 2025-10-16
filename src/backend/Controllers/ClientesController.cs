@@ -61,6 +61,10 @@ namespace Parking.Api.Controllers
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] ClienteUpdateDto dto)
         {
+            var duplicado = await _db.Clientes.AnyAsync(c =>
+                c.Id != id && c.Nome == dto.Nome && c.Telefone == dto.Telefone);
+            if (duplicado) return Conflict("Já existe outro cliente com este nome e telefone.");
+
             var c = await _db.Clientes.FindAsync(id);
             if (c == null) return NotFound();
             c.Nome = dto.Nome;
