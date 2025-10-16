@@ -13,6 +13,8 @@ namespace Parking.Api.Data
         public DbSet<Fatura> Faturas => Set<Fatura>();
         public DbSet<FaturaVeiculo> FaturasVeiculos => Set<FaturaVeiculo>();
 
+        public DbSet<VeiculoHistorico> VeiculoHistorico { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasPostgresExtension("uuid-ossp");
@@ -66,6 +68,33 @@ namespace Parking.Api.Data
                 e.Property(x => x.FaturaId).HasColumnName("fatura_id");
                 e.Property(x => x.VeiculoId).HasColumnName("veiculo_id");
             });
+            
+            modelBuilder.Entity<VeiculoHistorico>(e =>
+            {
+                e.ToTable("veiculo_historico", "public");
+
+                e.HasKey(x => x.Id);
+
+                e.Property(x => x.Id).HasColumnName("id");
+                e.Property(x => x.VeiculoId).HasColumnName("veiculo_id");
+                e.Property(x => x.ClienteId).HasColumnName("cliente_id");
+                e.Property(x => x.Inicio).HasColumnName("inicio");
+                e.Property(x => x.Fim).HasColumnName("fim");
+
+                e.HasOne(x => x.Veiculo)
+                    .WithMany()                    // (se quiser navegar: .WithMany(v => v.Historicos))
+                    .HasForeignKey(x => x.VeiculoId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                e.HasOne(x => x.Cliente)
+                    .WithMany()                    // (se quiser navegar: .WithMany(c => c.Historicos))
+                    .HasForeignKey(x => x.ClienteId)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                e.HasIndex(x => x.VeiculoId);                  // idx por veículo
+                e.HasIndex(x => new { x.ClienteId, x.Inicio }); // idx composto (cliente + início)
+            });
+
         }
     }
 }

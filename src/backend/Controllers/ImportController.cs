@@ -162,6 +162,7 @@ namespace Parking.Api.Controllers
 
                         _db.Clientes.Add(cliente);
                         await _db.SaveChangesAsync(ct);
+                        
                     }
 
                     var v = new Veiculo
@@ -173,6 +174,16 @@ namespace Parking.Api.Controllers
                     };
 
                     _db.Veiculos.Add(v);
+                    await _db.SaveChangesAsync(ct);
+                    
+                    var historico = new VeiculoHistorico
+                    {
+                        VeiculoId = v.Id,
+                        ClienteId = v.ClienteId,
+                        Inicio = DateTime.UtcNow,
+                        Fim = null
+                    };
+                    _db.Set<VeiculoHistorico>().Add(historico);
                     await _db.SaveChangesAsync(ct);
 
                     await tx.CommitAsync(ct);
