@@ -54,6 +54,9 @@ namespace Parking.Api.Controllers
 
             if (string.IsNullOrWhiteSpace(dto.Nome))
                 return ValidationProblem("O campo 'Nome' é obrigatório.");
+            
+            if (string.IsNullOrWhiteSpace(dto.Telefone))
+                return ValidationProblem("O campo 'Telefone' é obrigatório.");
 
             var telefone = NormalizePhone(dto.Telefone);
 
@@ -107,6 +110,9 @@ namespace Parking.Api.Controllers
 
             if (string.IsNullOrWhiteSpace(dto.Nome))
                 return ValidationProblem("O campo 'Nome' é obrigatório.");
+            
+            if (string.IsNullOrWhiteSpace(dto.Telefone))
+                return ValidationProblem("O campo 'Telefone' é obrigatório.");
 
             var telefone = NormalizePhone(dto.Telefone);
 
